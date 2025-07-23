@@ -1,10 +1,9 @@
 #!/usr/bin/python3
+"""This module handles all database connections."""
 import sys
 import os
 import re
 import hashlib
-
-"""This module handles all database connections."""
 
 
 def main():
