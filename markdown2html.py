@@ -39,7 +39,11 @@ def main():
                     raw = match.group(1)
                     return hashlib.md5(raw.encode()).hexdigest()
 
-                text = re.sub(r'\[\[(.+?)\]\]', md5_repl, text)
+                text = re.sub(
+                    r'\[\[(.+?)\]\]',
+                    md5_repl,
+                    text
+                )
 
                 def remove_c(match):
                     return re.sub(r'[cC]', '', match.group(1))
@@ -84,8 +88,12 @@ def main():
                     ):
                         write_paragraph()
                         close_lists()
-                        content = convert_formatting(stripped[level + 1:].strip())
-                        outfile.write(f"<h{level}>{content}</h{level}>\n")
+                        content = convert_formatting(
+                            stripped[level + 1:].strip()
+                        )
+                        outfile.write(
+                            f"<h{level}>{content}</h{level}>\n"
+                        )
                         continue
 
                 if stripped.startswith('- '):
