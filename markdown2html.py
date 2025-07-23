@@ -1,8 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 import sys
 import os
 import re
 import hashlib
+
+"""This module handles all database connections."""
+
 
 def main():
     if len(sys.argv) < 3:
@@ -25,12 +28,16 @@ def main():
             def convert_formatting(text):
                 text = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', text)
                 text = re.sub(r'__(.+?)__', r'<em>\1</em>', text)
+
                 def md5_repl(match):
                     raw = match.group(1)
                     return hashlib.md5(raw.encode()).hexdigest()
+
                 text = re.sub(r'\[\[(.+?)\]\]', md5_repl, text)
+
                 def remove_c(match):
                     return re.sub(r'[cC]', '', match.group(1))
+
                 text = re.sub(r'\(\((.+?)\)\)', remove_c, text)
                 return text
 
@@ -64,7 +71,7 @@ def main():
 
                 if stripped.startswith('#'):
                     level = len(stripped) - len(stripped.lstrip('#'))
-                    if 1 <= level <= 6 and stripped[level] == ' ':
+                    if 1 <= level <= 6 and len(stripped) > level and stripped[level] == ' ':
                         write_paragraph()
                         close_lists()
                         content = convert_formatting(stripped[level + 1:].strip())
@@ -106,6 +113,7 @@ def main():
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         exit(1)
+
 
 if __name__ == "__main__":
     main()
