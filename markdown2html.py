@@ -37,7 +37,8 @@ def main():
 
                 def md5_repl(match):
                     raw = match.group(1)
-                    return hashlib.md5(raw.encode()).hexdigest()
+                    md5_hash = hashlib.md5(raw.encode())
+                    return md5_hash.hexdigest()
 
                 text = re.sub(
                     r'\[\[(.+?)\]\]',
