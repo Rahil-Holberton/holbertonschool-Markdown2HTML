@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """This module handles all database connections."""
+
 import sys
 import os
 import re
@@ -8,14 +9,20 @@ import hashlib
 
 def main():
     if len(sys.argv) < 3:
-        print("Usage: ./markdown2html.py README.md README.html", file=sys.stderr)
+        print(
+            "Usage: ./markdown2html.py README.md README.html",
+            file=sys.stderr
+        )
         exit(1)
 
     input_file = sys.argv[1]
     output_file = sys.argv[2]
 
     if not os.path.isfile(input_file):
-        print(f"Missing {input_file}", file=sys.stderr)
+        print(
+            f"Missing {input_file}",
+            file=sys.stderr
+        )
         exit(1)
 
     try:
@@ -70,7 +77,11 @@ def main():
 
                 if stripped.startswith('#'):
                     level = len(stripped) - len(stripped.lstrip('#'))
-                    if 1 <= level <= 6 and len(stripped) > level and stripped[level] == ' ':
+                    if (
+                        1 <= level <= 6 and
+                        len(stripped) > level and
+                        stripped[level] == ' '
+                    ):
                         write_paragraph()
                         close_lists()
                         content = convert_formatting(stripped[level + 1:].strip())
@@ -110,7 +121,10 @@ def main():
         exit(0)
 
     except Exception as e:
-        print(f"Error: {e}", file=sys.stderr)
+        print(
+            f"Error: {e}",
+            file=sys.stderr
+        )
         exit(1)
 
 
